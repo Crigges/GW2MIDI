@@ -18,6 +18,7 @@ dependencies {
     // This dependency is used internally, and not exposed to consumers on their own compile classpath.
     implementation 'com.google.guava:guava:23.0'
 	implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.11'	
+	implementation files('tevirtualmidi.jar')
     // Use JUnit test framework
     testImplementation 'junit:junit:4.12'
     
