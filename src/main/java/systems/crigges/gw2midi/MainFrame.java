@@ -28,7 +28,7 @@ import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 import javax.swing.DefaultComboBoxModel;
 
-public class MainFrame {
+public class MainFrame implements VisibleLog{
 
 	private JFrame frame;
 	private JComboBox<MidiDevice.Info> midiSelectBox;
@@ -38,6 +38,7 @@ public class MainFrame {
 	private GW2MIDI gw2Midi;
 	private JComboBox comboBox;
 	private JLabel lblNewLabel;
+	private JSpinner doubleSwapDelaySpinner;
 
 	/**
 	 * Launch the application.
@@ -110,6 +111,11 @@ public class MainFrame {
 		comboBox.setModel(new DefaultComboBoxModel(Instrument.values()));
 		
 		lblNewLabel = new JLabel("Instrument");
+		
+		JLabel lblNewLabel_1 = new JLabel("Double Swap Delay");
+		
+		doubleSwapDelaySpinner = new JSpinner();
+		doubleSwapDelaySpinner.setModel(new SpinnerNumberModel(100, 0, 1000, 1));
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -121,12 +127,14 @@ public class MainFrame {
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
 								.addComponent(midiSelectBox, 0, 263, Short.MAX_VALUE)
 								.addComponent(lblMidiDevice, GroupLayout.PREFERRED_SIZE, 142, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblStartKey, GroupLayout.PREFERRED_SIZE, 245, GroupLayout.PREFERRED_SIZE)
-								.addComponent(startKeySpinner, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+								.addComponent(startKeySpinner, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblStartKey))
 							.addPreferredGap(ComponentPlacement.RELATED, 193, Short.MAX_VALUE)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addComponent(lblNewLabel)
-								.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, 264, GroupLayout.PREFERRED_SIZE)))
+								.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, 264, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblNewLabel_1)
+								.addComponent(doubleSwapDelaySpinner, GroupLayout.PREFERRED_SIZE, 77, GroupLayout.PREFERRED_SIZE)))
 						.addComponent(lblReceivedInput))
 					.addContainerGap())
 		);
@@ -142,9 +150,13 @@ public class MainFrame {
 						.addComponent(midiSelectBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(lblStartKey)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblStartKey)
+						.addComponent(lblNewLabel_1))
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(startKeySpinner, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(startKeySpinner, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(doubleSwapDelaySpinner, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(lblReceivedInput)
 					.addPreferredGap(ComponentPlacement.RELATED)
@@ -176,10 +188,13 @@ public class MainFrame {
 	public int getStartKey() {
 		return (int) startKeySpinner.getValue();
 	}
+	
+	public int getDoubleSwapDelay() {
+		return (int) doubleSwapDelaySpinner.getValue();
+	}
 
 	public int getInstrument() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
 }

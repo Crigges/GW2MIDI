@@ -14,11 +14,13 @@ public class KeyEmulator {
 	private int currentOctave = 1;
 	private Instrument instrument = Instrument.HARP;
 	private MainFrame gui;
+	private long lastOctaveSwap = 0;
 	
 	public KeyEmulator(MainFrame gui) {
 		this.gui = gui;
 		try {
 			robot = new Robot();
+			robot.setAutoDelay(0);
 		} catch (AWTException e) {
 			gui.log("Failed to create KeyEmulator: " + e.getMessage());
 		}
@@ -54,15 +56,41 @@ public class KeyEmulator {
 	}
 	
 	private void up() {
+		sleepIfNecessary();
 		robot.keyPress(KeyEvent.VK_NUMPAD9);
 		robot.keyRelease(KeyEvent.VK_NUMPAD9);
 		currentOctave++;
 	}
 	
 	private void down() {
+		sleepIfNecessary();
 		robot.keyPress(KeyEvent.VK_NUMPAD0);
 		robot.keyRelease(KeyEvent.VK_NUMPAD0);
 		currentOctave--;
+	}
+	
+	private void sleepIfNecessary() {
+		long diff = System.currentTimeMillis() - lastOctaveSwap;
+		if(diff < gui.getDoubleSwapDelay()) {
+			BusyTimer.waitFor(gui.getDoubleSwapDelay() - diff);;
+		}
+		lastOctaveSwap = System.currentTimeMillis();
+	}
+	
+	static int doubleSwapDelay = 80;
+	
+	public static void main(String[] args) throws InterruptedException {
+		BusyTimer.autoSetMinSleepBlocking();
+		KeyEmulator emu = new KeyEmulator(new MainFrame());
+		long time = System.currentTimeMillis();
+//		while(true) {
+//			Thread.sleep(5000);
+//			for(int i = 1; i <= 30; i++) {
+//				emu.play(20);
+//				emu.play(0);
+//			}
+//			System.out.println(System.currentTimeMillis() - time);
+//		}
 	}
 	
 }
