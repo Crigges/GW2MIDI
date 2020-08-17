@@ -2,10 +2,6 @@ package systems.crigges.gw2midi;
 
 import javax.sound.midi.*;
 
-import de.tobiaserichsen.tevm.TeVirtualMIDI;
-
-import java.util.List;
-
 public class GW2MIDI {
 	private MidiDevice currentDevice = null;
 	private MainFrame gui;
@@ -60,25 +56,29 @@ public class GW2MIDI {
 //		}
 //	}
 
-	int[] tMap = { 0, -1, 1, -1, 2, 3, -1, 4, -1, 5, -1, 6 };
+	int[] majorMap = { 0, 1000, 1, 1000, 2, 3, 1000, 4, 1000, 5, 1000, 6 };
+	int[] minorMap = { 0, 1000, 1, 2, 1000, 3, 1000, 4, 5, 1000, 6, 1000 };
 
+	//According to some sources middle c is always 60 so low c should be 48
+	
 	class MidiInputReceiver implements Receiver {
 
 		public void send(MidiMessage msg, long timeStamp) {
 			byte[] arr = msg.getMessage();
-			StringBuilder sb = new StringBuilder();
-//			for (byte b : arr) {
-//				sb.append(String.format("%02X ", b));
-//			}
-			if (arr[0] == -112 && arr[2] != 0) {
-				int offset = (arr[1]-gui.getStartKey()) / 12 * 7;
-				System.out.println(gui.getStartKey());
-				int key = offset + tMap[(arr[1] - gui.getStartKey()) % 12];
-				gui.log("Received Key " + arr[1] + " which translates to "
-						+key);
-				keyEmulator.play(key);
-				System.out.println(offset + tMap[arr[1] % 12]);
+			if (arr[0] != -112 || arr[2] == 0) {
+				return;
 			}
+			PianoScale scale = gui.getStartKey();
+			int startKey = scale.getStartOffset() + 48;
+			int offset = (arr[1]-startKey) / 12 * 7;
+			int key;
+			if(scale.isMajor()) {
+				key = offset + majorMap[(arr[1] - startKey) % 12];
+			}else {
+				key = offset + minorMap[(arr[1] - startKey) % 12];
+			}
+			gui.log("Received Key " + arr[1] + " which translates to " + key);
+			keyEmulator.play(key);
 		}
 
 		@Override

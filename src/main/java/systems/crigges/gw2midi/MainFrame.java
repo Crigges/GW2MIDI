@@ -32,13 +32,13 @@ public class MainFrame implements VisibleLog{
 
 	private JFrame frame;
 	private JComboBox<MidiDevice.Info> midiSelectBox;
-	private JSpinner startKeySpinner;
 	private JTextArea logTextArea;
 	private JScrollPane scrollPane;
 	private GW2MIDI gw2Midi;
-	private JComboBox comboBox;
+	private JComboBox<Instrument> comboBox;
 	private JLabel lblNewLabel;
 	private JSpinner doubleSwapDelaySpinner;
+	private JComboBox<PianoScale> pianoScaleSelector;
 
 	/**
 	 * Launch the application.
@@ -67,7 +67,7 @@ public class MainFrame implements VisibleLog{
 	 * Create the application.
 	 */
 	public MainFrame() {
-		new MidiEmulator();
+		//new MidiEmulator();
 		gw2Midi = new GW2MIDI(this);
 		initialize();
 		setAvailableMidiDevices();	
@@ -97,10 +97,7 @@ public class MainFrame implements VisibleLog{
 			}
 		});
 
-		JLabel lblStartKey = new JLabel("Start Key (Low C)");
-
-		startKeySpinner = new JSpinner();
-		startKeySpinner.setModel(new SpinnerNumberModel(0, 0, 230, 1));
+		JLabel lblStartKey = new JLabel("Piano Scale");
 
 		scrollPane = new JScrollPane();
 		scrollPane.setBorder(new LineBorder(new Color(130, 135, 144)));
@@ -116,6 +113,9 @@ public class MainFrame implements VisibleLog{
 		
 		doubleSwapDelaySpinner = new JSpinner();
 		doubleSwapDelaySpinner.setModel(new SpinnerNumberModel(100, 0, 1000, 1));
+		
+		pianoScaleSelector = new JComboBox();
+		pianoScaleSelector.setModel(new DefaultComboBoxModel(PianoScale.values()));
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -125,9 +125,9 @@ public class MainFrame implements VisibleLog{
 						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 720, Short.MAX_VALUE)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(pianoScaleSelector, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 								.addComponent(midiSelectBox, 0, 263, Short.MAX_VALUE)
 								.addComponent(lblMidiDevice, GroupLayout.PREFERRED_SIZE, 142, GroupLayout.PREFERRED_SIZE)
-								.addComponent(startKeySpinner, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 								.addComponent(lblStartKey))
 							.addPreferredGap(ComponentPlacement.RELATED, 193, Short.MAX_VALUE)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
@@ -155,8 +155,8 @@ public class MainFrame implements VisibleLog{
 						.addComponent(lblNewLabel_1))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(startKeySpinner, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(doubleSwapDelaySpinner, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(doubleSwapDelaySpinner, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(pianoScaleSelector, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(lblReceivedInput)
 					.addPreferredGap(ComponentPlacement.RELATED)
@@ -185,8 +185,8 @@ public class MainFrame implements VisibleLog{
 		bar.setValue(bar.getMaximum());
 	}
 	
-	public int getStartKey() {
-		return (int) startKeySpinner.getValue();
+	public PianoScale getStartKey() {
+		return (PianoScale) pianoScaleSelector.getSelectedItem();
 	}
 	
 	public int getDoubleSwapDelay() {
