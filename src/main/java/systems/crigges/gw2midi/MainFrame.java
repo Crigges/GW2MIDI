@@ -76,7 +76,7 @@ public class MainFrame implements VisibleLog {
 		gw2Midi = new GW2MIDI(this);
 		initialize();
 		setAvailableMidiDevices();
-		log("Welcome to GW2Midi by Crigges.8735 select an input Midi device to start");
+		log("Welcome to GW2Midi v0.1 by Crigges.8735 select an input Midi device to start");
 	}
 
 	/**
@@ -234,7 +234,7 @@ public class MainFrame implements VisibleLog {
 	}
 	
 	public int getOctaveTranspose() {
-		return Integer.parseInt(octaveTranspose.getSelectedItem().toString().substring(1));
+		return Integer.parseInt(octaveTranspose.getSelectedItem().toString());
 	}
 
 	public int getInstrument() {
