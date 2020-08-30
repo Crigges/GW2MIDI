@@ -6,7 +6,7 @@ This tool allows you to use your MIDI keyboard as input to play instruments inga
 ### Windows  
 1. Make sure that your keybindings are right ingame:  
 ![KeyLayout](http://gw2mb.com/image/controls.png)  
-2. Download the default package that comes with a JRE  
+2. Download the [default package](https://github.com/Crigges/GW2MIDI/releases/download/v0.1/gw2midi_v0.1_jre.zip) that comes with a JRE  
 3. Extract it to any location  
 4. Run the `START_GWMIDI.BAT` **you will have to start it as administrator *IF* GW2 is also running as administator**  
 5. Select your Input MIDI device. Your device may appear multiple times, make sure to select the right one with a working transmitter  
