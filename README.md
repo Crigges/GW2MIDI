@@ -30,17 +30,17 @@ If you run into any Problem please check the `Common Problems` section first. If
 
 ### Common Problems  
 * Octave swapping isn't working properly:  
-* Double-check your keybindings!  
-* Try to increase the `Double Swap Delay`  
-* Swap the map instance maybe it is lagging  
-* You might play to fast for GW2 to handle, there is nothing I can do about that  
+    * Double-check your keybindings!  
+    * Try to increase the `Double Swap Delay`  
+    * Swap the map instance maybe it is lagging  
+    * You might play to fast for GW2 to handle, there is nothing I can do about that  
 * I can't see my MIDI Keyboard:  
-* Make sure its drivers are installed properly  
-* Can you see your device in other software?  
+    * Make sure its drivers are installed properly  
+    * Can you see your device in other software?  
 * My Keyboard is working but GW2 isn't receiving any Input  
-* Double-check your keybindings!  
-* Even if GW2 isn't running as administrator run the `START_GWMIDI.BAT` as administrator  
-* Make sure GW2 is in the foreground and focused
+    * Double-check your keybindings!  
+    * Even if GW2 isn't running as administrator run the `START_GWMIDI.BAT` as administrator  
+    * Make sure GW2 is in the foreground and focused
 
 ### Known Issues  
 * Currently there is no support for Instruments where you need to hold keys like the Horn.
@@ -52,6 +52,6 @@ There is no official statement for this program in particular however this is th
 ## Technical Background
 
 * Double Swap Delay  
-* There is an ingame limitation that you may not swap the octave twice without a server response from the first swap this is why the delay is needed. It is only applied when necessary, it even uses a busy waiting mechanism to be as accurate as possible.  
+    * There is an ingame limitation that you may not swap the octave twice without a server response from the first swap this is why the delay is needed. It is only applied when necessary, it even uses a busy waiting mechanism to be as accurate as possible.  
 * Don't swap If necessary  
-* The program is aware that it is possible to play the `C` from the upper octave so it only swaps if really necessary
+    * The program is aware that it is possible to play the `C` from the upper octave so it only swaps if really necessary
